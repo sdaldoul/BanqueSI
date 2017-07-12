@@ -12,6 +12,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 @Entity
 public class Employe implements Serializable {
 
@@ -19,13 +22,13 @@ public class Employe implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codeEmploye;
 	private String nomEmploye;
-	
-    @ManyToOne
-	@JoinColumn(name="code_emp_sup")
+
+	@ManyToOne
+	@JoinColumn(name = "code_emp_sup")
 	private Employe employeSup;
-	
-    @ManyToMany
-    @JoinTable(name="EMP_GR")
+
+	@ManyToMany
+	@JoinTable(name = "EMP_GR")
 	private Collection<Groupe> groupes;
 
 	public Long getCodeEmploye() {
@@ -44,14 +47,17 @@ public class Employe implements Serializable {
 		this.nomEmploye = nomEmploye;
 	}
 
+	@JsonIgnore
 	public Employe getEmployeSup() {
 		return employeSup;
 	}
 
+	@JsonSetter
 	public void setEmployeSup(Employe employeSup) {
 		this.employeSup = employeSup;
 	}
 
+	@JsonIgnore
 	public Collection<Groupe> getGroupes() {
 		return groupes;
 	}
